@@ -10,6 +10,7 @@
 		071CD2622228544700E6D385 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071CD2612228544700E6D385 /* FontExtension.swift */; };
 		07741D72218CDED600DB3B97 /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07741D71218CDED600DB3B97 /* FirstViewModel.swift */; };
 		0A6990351F9F82A300F4BAC7 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6990341F9F82A300F4BAC7 /* UIApplicationExtension.swift */; };
+		0A8C37A81FB35907000E7C68 /* GradientExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8C37A71FB35907000E7C68 /* GradientExtensions.swift */; };
 		0ABFB8901FA366D90098F751 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABFB8921FA366D90098F751 /* Main.storyboard */; };
 		9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0C72691C738D3400BAF3B1 /* AppDelegate.swift */; };
 		9B0C72721C738D3400BAF3B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B0C726A1C738D3400BAF3B1 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		9B3AA3991ED35007005A4D26 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AA3981ED35007005A4D26 /* SignInViewController.swift */; };
 		9B3AA39B1ED35013005A4D26 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AA39A1ED35013005A4D26 /* SignUpViewController.swift */; };
 		9B3AA3A11ED4D014005A4D26 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3AA3A01ED4D014005A4D26 /* HomeViewController.swift */; };
+		9B50B45A1F3E04860017CEF9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		9B715A461E28083600C0C039 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B715A451E28083600C0C039 /* PlaceholderTextView.swift */; };
 		9B71D6A020976E6800DCBBBD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B71D69F20976E6800DCBBBD /* Constants.swift */; };
 		9B766D332092536000A28FFA /* LogoutSuccess.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B766D322092536000A28FFA /* LogoutSuccess.json */; };
@@ -83,6 +85,7 @@
 		071CD2612228544700E6D385 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		07741D71218CDED600DB3B97 /* FirstViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewModel.swift; sourceTree = "<group>"; };
 		0A6990341F9F82A300F4BAC7 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		0A8C37A71FB35907000E7C68 /* GradientExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientExtensions.swift; sourceTree = "<group>"; };
 		0ABFB8911FA366D90098F751 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0ABFB8941FA366EA0098F751 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		0ABFB8961FA366EC0098F751 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -459,6 +462,7 @@
 		E8290BFC1D832D6400599960 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0A8C37A71FB35907000E7C68 /* GradientExtensions.swift */,
 				9BD01E351F01641E007255E3 /* DictionaryExtension.swift */,
 				E8290C011D8330A800599960 /* StringExtension.swift */,
 				E8B30E011E72FF8000131DCF /* UIStoryboardExtension.swift */,
@@ -783,6 +787,8 @@
 				9B3AA3991ED35007005A4D26 /* SignInViewController.swift in Sources */,
 				E8FBB1BF1DD21A32000D6740 /* Session.swift in Sources */,
 				0A6990351F9F82A300F4BAC7 /* UIApplicationExtension.swift in Sources */,
+				9B50B45A1F3E04860017CEF9 /* (null) in Sources */,
+				0A8C37A81FB35907000E7C68 /* GradientExtensions.swift in Sources */,
 				9B77E0731E2FB6350020E450 /* User.swift in Sources */,
 				FA54D5881E11C59600F0DBEA /* FirstViewController.swift in Sources */,
 				FABDC9221EE1EB2B000DDAC3 /* ConfigurationManager.swift in Sources */,
