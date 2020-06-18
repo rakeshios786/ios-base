@@ -15,7 +15,9 @@ jobs:
     - name: install git secret
       run: brew install git-secret    
     - name: Retrieve private key
-      run: echo ${{ secrets.GPG_PRIVATE_KEY }} > ./private_key.gpg
+      env: 
+        KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      run: echo "$KEY" > ./private_key.gpg
     - name: Import private key
       run: gpg --import ./private_key.gpg
     - name: reveal encrypted file
