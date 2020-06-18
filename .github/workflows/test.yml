@@ -12,13 +12,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    
-    - name: Reveal encrypted files
-      run: |
-        brew install git-secret
-        echo ${{ secrets.GPG_PRIVATE_KEY }} > ./private_key.gpg
-        gpg --import ./private_key.gpg
-        git secret reveal
+    - name: install git secret
+      run: brew install git-secret    
+    - name: Retrieve private key
+      run: echo ${{ secrets.GPG_PRIVATE_KEY }} > ./private_key.gpg
+    - name: Import private key
+      run: gpg --import ./private_key.gpg
+    - name: reveal encrypted file
+      run: git secret reveal
 
     - name: Install dependencies
       run:  pod install
