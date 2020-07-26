@@ -35,9 +35,7 @@ public struct KeychainStoreString {
   }
   
   public var projectedValue: KeychainWrapper {
-    get {
-      return KeychainWrapper.default
-    }
+    KeychainWrapper.default
   }
 }
 
@@ -62,9 +60,7 @@ public struct KeychainStoreNumber<T> where T: Numeric, T: Codable {
   }
   
   public var projectedValue: KeychainWrapper {
-    get {
-      return KeychainWrapper.default
-    }
+    KeychainWrapper.default
   }
 }
 

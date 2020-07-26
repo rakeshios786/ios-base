@@ -47,8 +47,7 @@ class SignUpViewModelWithEmail {
   }
   
   var hasValidData: Bool {
-    return
-      email.isEmailFormatted() && !password.isEmpty && password == passwordConfirmation
+    email.isEmailFormatted() && !password.isEmpty && password == passwordConfirmation
   }
   
   func signup() {

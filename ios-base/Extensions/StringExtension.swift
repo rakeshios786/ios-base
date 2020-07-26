@@ -17,19 +17,19 @@ extension String {
   }
   
   var hasPunctuationCharacters: Bool {
-    return rangeOfCharacter(from: CharacterSet.punctuationCharacters) != nil
+    rangeOfCharacter(from: CharacterSet.punctuationCharacters) != nil
   }
   
   var hasNumbers: Bool {
-    return rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil
+    rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil
   }
   
   var localized: String {
-    return self.localize()
+    self.localize()
   }
     
   func localize(comment: String = "") -> String {
-    return NSLocalizedString(self, comment: comment)
+    NSLocalizedString(self, comment: comment)
   }
   
   var validFilename: String {

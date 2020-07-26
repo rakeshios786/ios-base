@@ -23,11 +23,11 @@ extension UIView {
   }
   
   var typeName: String {
-    return String(describing: type(of: self))
+    String(describing: type(of: self))
   }
   
   func instanceFromNib(withName name: String) -> UIView? {
-    return UINib(nibName: name,
+    UINib(nibName: name,
                  bundle: nil).instantiate(withOwner: self,
                                           options: nil).first as? UIView
   }

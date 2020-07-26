@@ -13,7 +13,7 @@ enum UserServiceError: Error {
   case noResponse
 
   var localizedDescription: String {
-    return String(describing: self)
+    String(describing: self)
   }
 }
 

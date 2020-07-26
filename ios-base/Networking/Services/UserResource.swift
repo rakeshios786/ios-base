@@ -84,7 +84,7 @@ enum UserResource: TargetType {
   }
 
   private func getLoginParams(email: String, password: String) -> [String: Any] {
-    return [
+    [
       "user": [
         "email": email,
         "password": password
@@ -109,7 +109,7 @@ enum UserResource: TargetType {
   private func getSignUpMultipartParams(
     email: String, password: String, avatar: UIImage
   ) -> [String: Any] {
-    return [
+    [
       "email": email,
       "password": password,
       "password_confirmation": password,

@@ -20,10 +20,10 @@ extension TargetType {
   }
 
   var headers: [String: String]? {
-    return getHeaders()
+    getHeaders()
   }
 
-  var sampleData: Data { return Data() }
+  var sampleData: Data { Data() }
 
 }
 
@@ -31,7 +31,7 @@ extension TargetType {
 extension TargetType {
 
   static private var baseHeaders: [String: String] {
-    return [
+    [
       HTTPHeader.accept.rawValue: "application/json",
       HTTPHeader.contentType.rawValue: "application/json"
     ]
@@ -52,13 +52,13 @@ extension TargetType {
     parameters: [String: Any],
     encoding: ParameterEncoding = JSONEncoding.default
   ) -> Task {
-    return .requestParameters(parameters: parameters, encoding: encoding)
+    .requestParameters(parameters: parameters, encoding: encoding)
   }
 
   public func multipartData(
     from parameters: [String: Any], rootKey: String? = nil
   ) -> [MultipartFormData] {
-    return parameters.map { (key: String, value: Any) -> [MultipartFormData]? in
+    parameters.map { (key: String, value: Any) -> [MultipartFormData]? in
       formData(from: value, key: key, rootKey: rootKey)?.compactMap { $0 }
     }.compactMap { $0 }.flatMap { $0 }
   }

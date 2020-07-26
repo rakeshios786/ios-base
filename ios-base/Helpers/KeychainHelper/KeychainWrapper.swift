@@ -9,16 +9,16 @@
 import Foundation
 
 /// Keychain service attributes
-private let secMatchLimit         : String = kSecMatchLimit          as String
-private let secReturnData         : String = kSecReturnData          as String
-private let secValueData          : String = kSecValueData           as String
-private let secAttrAccessible     : String = kSecAttrAccessible      as String
-private let secClass              : String = kSecClass               as String
-private let secAttrService        : String = kSecAttrService         as String
-private let secAttrGeneric        : String = kSecAttrGeneric         as String
-private let secAttrAccount        : String = kSecAttrAccount         as String
-private let secAttrAccessGroup    : String = kSecAttrAccessGroup     as String
-private let secReturnAttributes   : String = kSecReturnAttributes    as String
+private let secMatchLimit: String = kSecMatchLimit          as String
+private let secReturnData: String = kSecReturnData          as String
+private let secValueData: String = kSecValueData           as String
+private let secAttrAccessible: String = kSecAttrAccessible      as String
+private let secClass: String = kSecClass               as String
+private let secAttrService: String = kSecAttrService         as String
+private let secAttrGeneric: String = kSecAttrGeneric         as String
+private let secAttrAccount: String = kSecAttrAccount         as String
+private let secAttrAccessGroup: String = kSecAttrAccessGroup     as String
+private let secReturnAttributes: String = kSecReturnAttributes    as String
 
 open class KeychainWrapper {
   /// Singleton
@@ -115,7 +115,7 @@ open class KeychainWrapper {
     return keys
   }
   
-  /// MARK: public getters
+  // MARK: public getters
   
   /// Returns an object that conforms to `Decodable` for a specified key.
   ///
@@ -125,14 +125,13 @@ open class KeychainWrapper {
   open func object<T>(
     of type: T.Type,
     forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> T? where T:Decodable {
+    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> T? where T: Decodable {
     guard let data = data(forKey: key, withAccessibility: accessibility) else {
       return nil
     }
     
     return try? JSONDecoder().decode(T.self, from: data)
   }
-  
   
   /// Returns an object that conforms to `Decodable` for a specified key.
   ///
@@ -143,7 +142,7 @@ open class KeychainWrapper {
     of type: T.Type,
     forKey key: String,
     withAccessibility accessibility: KeychainItemAccessibility? = nil) -> T?
-    where  T:Numeric, T:Decodable {
+    where  T: Numeric, T: Decodable {
     guard let data = data(forKey: key, withAccessibility: accessibility) else {
       return nil
     }
@@ -205,7 +204,7 @@ open class KeychainWrapper {
         return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? NSCoding
     }
   
-  /// MARK: Public setters
+  // MARK: Public setters
   
   /// Save an `Encodable` compliant object associated with a specific key.
   /// If the key already exists, the data will be overritten.
@@ -217,7 +216,7 @@ open class KeychainWrapper {
   @discardableResult open func set<T>(
     _ value: T,
     forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool where T:Encodable {
+    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool where T: Encodable {
     guard let data = try? JSONEncoder().encode(value) else { return false }
     
     return set(data, forKey: key, withAccessibility: accessibility)
@@ -234,7 +233,7 @@ open class KeychainWrapper {
     _ value: T,
     forKey key: String,
     withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool
-    where T:Numeric, T:Encodable {
+    where T: Numeric, T: Encodable {
     guard let data = try? JSONEncoder().encode([value]) else { return false }
     
     return set(data, forKey: key, withAccessibility: accessibility)
@@ -279,11 +278,9 @@ open class KeychainWrapper {
     
     if status == errSecSuccess {
       return true
-    }
-    else if status == errSecDuplicateItem {
+    } else if status == errSecDuplicateItem {
       return update(value, forKey: key, withAccessibility: accessibility)
-    }
-    else {
+    } else {
       return false
     }
   }
@@ -328,7 +325,6 @@ open class KeychainWrapper {
     deleteKeychainSecClass(kSecClassKey)
     deleteKeychainSecClass(kSecClassIdentity)
   }
-  
   
   /// Private methods
   

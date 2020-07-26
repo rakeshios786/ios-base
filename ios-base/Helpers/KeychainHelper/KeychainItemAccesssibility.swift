@@ -36,14 +36,14 @@ public enum KeychainItemAccessibility {
 extension KeychainItemAccessibility: KeychainAttrReprentable {
   /// KeychainItemAccessibility -> CFString
   var keychainAttrValue: CFString {
-    return keychainAccessibilityLookup[self]!
+    keychainAccessibilityLookup[self]!
   }
 }
 
-private let keychainAccessibilityLookup: [KeychainItemAccessibility:CFString] = [
-  .afterFirstUnlock              : kSecAttrAccessibleAfterFirstUnlock,
+private let keychainAccessibilityLookup: [KeychainItemAccessibility: CFString] = [
+  .afterFirstUnlock: kSecAttrAccessibleAfterFirstUnlock,
   .afterFirstUnlockThisDeviceOnly: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-  .whenPasscodeSetThisDeviceOnly : kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-  .whenUnlocked                  : kSecAttrAccessibleWhenUnlocked,
-  .whenUnlockedThisDeviceOnly    : kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+  .whenPasscodeSetThisDeviceOnly: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+  .whenUnlocked: kSecAttrAccessibleWhenUnlocked,
+  .whenUnlockedThisDeviceOnly: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
 ]

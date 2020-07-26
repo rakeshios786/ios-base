@@ -38,7 +38,7 @@ class MultipartMedia {
   var data: Data
   var type: MimeType
   var toFile: String {
-    return key.validFilename + type.fileExtension()
+    key.validFilename + type.fileExtension()
   }
   
   init(key: String, data: Data, type: MimeType = .jpeg) {
