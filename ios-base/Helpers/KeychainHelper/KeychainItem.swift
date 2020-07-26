@@ -28,9 +28,9 @@ public struct KeychainStoreString {
     }
     
     set {
-      guard let v = newValue else { return }
+      guard let value = newValue else { return }
       
-      KeychainWrapper.default.set(v, forKey: key)
+      KeychainWrapper.default.set(value, forKey: key)
     }
   }
   
@@ -55,9 +55,9 @@ public struct KeychainStoreNumber<T> where T: Numeric, T: Codable {
     }
     
     set {
-      guard let v = newValue else { return }
+      guard let value = newValue else { return }
       
-      KeychainWrapper.default.set(v, forKey: key)
+      KeychainWrapper.default.set(value, forKey: key)
     }
   }
   
@@ -82,16 +82,14 @@ public struct KeychainStoreObject<T> where T: Codable {
     }
     
     set {
-      guard let v = newValue else { return }
+      guard let value = newValue else { return }
       
-      KeychainWrapper.default.set(v, forKey: key)
+      KeychainWrapper.default.set(value, forKey: key)
     }
   }
   
   public var projectedValue: KeychainWrapper {
-    get {
-      return KeychainWrapper.default
-    }
+        KeychainWrapper.default
   }
 }
 
