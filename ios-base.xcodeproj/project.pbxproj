@@ -30,7 +30,9 @@
 		236A0B5024CD85F5001E8002 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B4D24CD85F5001E8002 /* KeychainWrapper.swift */; };
 		236A0B5124CD85F5001E8002 /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B4E24CD85F5001E8002 /* KeychainItem.swift */; };
 		236A0B5324CD8655001E8002 /* KeyChainUniqueId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5224CD8655001E8002 /* KeyChainUniqueId.swift */; };
-		236A0B5524CD872C001E8002 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 236A0B5424CD872C001E8002 /* .swiftlint.yml */; };
+		236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */; };
+		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
+		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
 		49B55E7EFE4B4AB33F9D45DC /* Pods_ios_base_ios_baseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86489602094342400B80269 /* Pods_ios_base_ios_baseUITests.framework */; };
 		88322866B1B0807F4161B0C7 /* Pods_ios_base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5331948D49F73551E188FC1 /* Pods_ios_base.framework */; };
 		9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0C72691C738D3400BAF3B1 /* AppDelegate.swift */; };
@@ -123,7 +125,9 @@
 		236A0B4D24CD85F5001E8002 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		236A0B4E24CD85F5001E8002 /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		236A0B5224CD8655001E8002 /* KeyChainUniqueId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainUniqueId.swift; sourceTree = "<group>"; };
-		236A0B5424CD872C001E8002 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
+		236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
+		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
+		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
 		2A0D25B4038197B66DB96B4F /* Pods-ios-base.uitests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.uitests.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.uitests.xcconfig"; sourceTree = "<group>"; };
 		3F7782D67A29B3F015B36B72 /* Pods-ios-base.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.debug.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.debug.xcconfig"; sourceTree = "<group>"; };
 		492292317C9AA84D410C67C2 /* Pods-ios-base.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.release.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.release.xcconfig"; sourceTree = "<group>"; };
@@ -349,6 +353,16 @@
 			path = KeychainHelper;
 			sourceTree = "<group>";
 		};
+		236A0B5624CD8A4A001E8002 /* NotificationCenter */ = {
+			isa = PBXGroup;
+			children = (
+				236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */,
+				236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */,
+				236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */,
+			);
+			path = NotificationCenter;
+			sourceTree = "<group>";
+		};
 		506A29AE0C7D2BF634BD7D7D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -498,7 +512,7 @@
 		9BFA84EF1C7767DD009F64E4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				236A0B5424CD872C001E8002 /* .swiftlint.yml */,
+				236A0B5624CD8A4A001E8002 /* NotificationCenter */,
 				236A0B4924CD84C3001E8002 /* KeychainHelper */,
 				9B88CC661CAB305900AE60C5 /* Constants.swift */,
 			);
@@ -693,7 +707,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				236A0B5524CD872C001E8002 /* .swiftlint.yml in Resources */,
 				0ABFB8901FA366D90098F751 /* Main.storyboard in Resources */,
 				9BFA84F31C776827009F64E4 /* LaunchScreen.storyboard in Resources */,
 				9B8D306B20AB456C0050697F /* Localization.strings in Resources */,
@@ -926,6 +939,7 @@
 				9B8EB5BF247590710082370F /* AuthViewModelStateDelegate.swift in Sources */,
 				FABDC9221EE1EB2B000DDAC3 /* ConfigurationManager.swift in Sources */,
 				9B8574D7212C81950063A3E2 /* SignUpViewModel.swift in Sources */,
+				236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */,
 				9BE3669D1F101737007CAECD /* MultipartMedia.swift in Sources */,
 				9B8574D9212C84130063A3E2 /* ImageExtension.swift in Sources */,
 				FE583F0A22AFC9E000EF3CDA /* AnalyticsManager.swift in Sources */,
@@ -941,11 +955,13 @@
 				FE4D635E22B2CAFF00685161 /* AppNavigator.swift in Sources */,
 				074889A72477251500A0029E /* ActivityIndicatorPresenter.swift in Sources */,
 				E8FBB1C11DD21D18000D6740 /* SessionManager.swift in Sources */,
+				236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */,
 				9BE3669F1F10175E007CAECD /* Base64Media.swift in Sources */,
 				9BAFB7C32114E3CD0099DC61 /* SignInViewModel.swift in Sources */,
 				9B8EB5BD2475890A0082370F /* NetworkState.swift in Sources */,
 				9B88CC671CAB305900AE60C5 /* Constants.swift in Sources */,
 				9BAFB7BF2114D9910099DC61 /* HomeViewModel.swift in Sources */,
+				236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */,
 				9B715A461E28083600C0C039 /* PlaceholderTextView.swift in Sources */,
 				074D20D7248E98EC002A39B4 /* APIClient.swift in Sources */,
 			);
