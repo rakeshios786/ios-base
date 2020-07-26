@@ -26,10 +26,7 @@
 		074D20DD248ECEAC002A39B4 /* BaseURLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D20DC248ECEAC002A39B4 /* BaseURLConvertible.swift */; };
 		07741D72218CDED600DB3B97 /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07741D71218CDED600DB3B97 /* FirstViewModel.swift */; };
 		0ABFB8901FA366D90098F751 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABFB8921FA366D90098F751 /* Main.storyboard */; };
-		236A0B4F24CD85F5001E8002 /* KeychainItemAccesssibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B4C24CD85F4001E8002 /* KeychainItemAccesssibility.swift */; };
-		236A0B5024CD85F5001E8002 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B4D24CD85F5001E8002 /* KeychainWrapper.swift */; };
-		236A0B5124CD85F5001E8002 /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B4E24CD85F5001E8002 /* KeychainItem.swift */; };
-		236A0B5324CD8655001E8002 /* KeyChainUniqueId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5224CD8655001E8002 /* KeyChainUniqueId.swift */; };
+		236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5224CD8655001E8002 /* KeychainWrapper.swift */; };
 		236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */; };
 		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
 		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
@@ -122,10 +119,7 @@
 		0ABFB8961FA366EC0098F751 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		0E4800422B5D4DDA2D437100 /* Pods-ios-base-ios-baseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base-ios-baseUITests.release.xcconfig"; path = "Target Support Files/Pods-ios-base-ios-baseUITests/Pods-ios-base-ios-baseUITests.release.xcconfig"; sourceTree = "<group>"; };
 		18C57D0B131511ACAD07441F /* Pods_AcceptanceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcceptanceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		236A0B4C24CD85F4001E8002 /* KeychainItemAccesssibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccesssibility.swift; sourceTree = "<group>"; };
-		236A0B4D24CD85F5001E8002 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
-		236A0B4E24CD85F5001E8002 /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
-		236A0B5224CD8655001E8002 /* KeyChainUniqueId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChainUniqueId.swift; sourceTree = "<group>"; };
+		236A0B5224CD8655001E8002 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
 		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
 		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
@@ -348,10 +342,7 @@
 		236A0B4924CD84C3001E8002 /* KeychainHelper */ = {
 			isa = PBXGroup;
 			children = (
-				236A0B5224CD8655001E8002 /* KeyChainUniqueId.swift */,
-				236A0B4E24CD85F5001E8002 /* KeychainItem.swift */,
-				236A0B4C24CD85F4001E8002 /* KeychainItemAccesssibility.swift */,
-				236A0B4D24CD85F5001E8002 /* KeychainWrapper.swift */,
+				236A0B5224CD8655001E8002 /* KeychainWrapper.swift */,
 			);
 			path = KeychainHelper;
 			sourceTree = "<group>";
@@ -926,13 +917,11 @@
 				9B3AA3A11ED4D014005A4D26 /* HomeViewController.swift in Sources */,
 				9B77E0751E2FB66F0020E450 /* UserDataManager.swift in Sources */,
 				9BD01E361F01641E007255E3 /* DictionaryExtension.swift in Sources */,
-				236A0B5024CD85F5001E8002 /* KeychainWrapper.swift in Sources */,
 				E8290C021D8330A800599960 /* StringExtension.swift in Sources */,
 				FE4D636222B2CBB000685161 /* OnboardingRoutes.swift in Sources */,
 				071CD2622228544700E6D385 /* FontExtension.swift in Sources */,
 				9B8D307020AB47E90050697F /* JSONEncodingExtension.swift in Sources */,
 				074D20D9248E993B002A39B4 /* AuthenticationServices.swift in Sources */,
-				236A0B4F24CD85F5001E8002 /* KeychainItemAccesssibility.swift in Sources */,
 				E81171921DE5EFB7003D3DF5 /* ViewControllerExtension.swift in Sources */,
 				9B3AA3991ED35007005A4D26 /* SignInViewController.swift in Sources */,
 				E8FBB1BF1DD21A32000D6740 /* Session.swift in Sources */,
@@ -948,9 +937,8 @@
 				FE583F0A22AFC9E000EF3CDA /* AnalyticsManager.swift in Sources */,
 				9B3AA39B1ED35013005A4D26 /* SignUpViewController.swift in Sources */,
 				9B5EAB4A232C146D00B9CE3C /* TextFieldExtension.swift in Sources */,
-				236A0B5124CD85F5001E8002 /* KeychainItem.swift in Sources */,
 				9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */,
-				236A0B5324CD8655001E8002 /* KeyChainUniqueId.swift in Sources */,
+				236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */,
 				FE06840322CE7ED400C6294F /* R.generated.swift in Sources */,
 				FE4D635C22B2C75400685161 /* Navigator.swift in Sources */,
 				FE251D0722A7FE0F00E0DE90 /* DataExtension.swift in Sources */,

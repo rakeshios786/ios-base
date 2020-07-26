@@ -1,386 +1,644 @@
 //
-//  KeychainWrapper.swift
+//  KeyChainHandle.swift
 //  KeychainWrapper
 //
-//  Created by Mars on 2019/7/9.
-//  Copyright © 2019 Mars. All rights reserved.
+//  Created by Rakesh Kumar Sharma on 21/04/20.
+//  Copyright © 2020 Rakesh Kumar Sharma. All rights reserved.
 //
 
 import Foundation
+import Security
 
-/// Keychain service attributes
-private let secMatchLimit         : String = kSecMatchLimit          as String
-private let secReturnData         : String = kSecReturnData          as String
-private let secValueData          : String = kSecValueData           as String
-private let secAttrAccessible     : String = kSecAttrAccessible      as String
-private let secClass              : String = kSecClass               as String
-private let secAttrService        : String = kSecAttrService         as String
-private let secAttrGeneric        : String = kSecAttrGeneric         as String
-private let secAttrAccount        : String = kSecAttrAccount         as String
-private let secAttrAccessGroup    : String = kSecAttrAccessGroup     as String
-private let secReturnAttributes   : String = kSecReturnAttributes    as String
+private let UUIDKey: StaticString = "UniqueIdentificationApp"
 
-open class KeychainWrapper {
-  /// Singleton
-  public static let `default` = KeychainWrapper()
-  
-  /// Attributes
-  private (set) public var serviceName: String
-  private (set) public var accessGroup: String?
-  private static let defaultServiceName: String = {
-    Bundle.main.bundleIdentifier ?? "SwiftKeychainWrapper"
-  }()
-  
-  /// Initializers
-  
-  /// Create an instance of `KeychainWrapper` with a custom service name and optional access group.
-  ///
-  /// - parameter serviceName:
-  /// - parameter accessGroup:
-  public init(serviceName: String, accessGroup: String? = nil) {
-    self.serviceName = serviceName
-    self.accessGroup = accessGroup
-  }
-  
-  private convenience init() {
-    self.init(serviceName: KeychainWrapper.defaultServiceName)
-  }
-  
-  /// Public methods
-  
-  /// Check if keychain data exists for a specific key.
-  ///
-  /// - parameter forKey: The key of data to be looked up.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `true` if the data associated with the key exists, else `false`.
-  open func hasValue(
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool {
-    if let _ = data(forKey: key, withAccessibility: accessibility) {
-      return true
+//https://github.com/dgynfi/DYFSwiftKeychain/blob/master/README-en.md
+
+/// The class for swift keychain wrapper.
+open class DYFSwiftKeychain: NSObject {
+    
+    static let shared = DYFSwiftKeychain()
+    
+    private override init() {
+        super.init()
     }
     
-    return false
-  }
-  
-  open func accessibilityOfKey(_ key: String) -> KeychainItemAccessibility? {
-    var queryDictionary = setupQueryDictionary(forKey: key)
-    queryDictionary[secMatchLimit] = kSecMatchLimitOne
-    queryDictionary[secReturnAttributes] = kCFBooleanTrue
+    /// Specifies an access group which is used to share keychain items between applications.
+    @objc public var accessGroup: String?
     
-    var results: AnyObject?
-    let status = SecItemCopyMatching(queryDictionary as CFDictionary, &results)
+    /// Specifies whether the item is synchronized to other devices through iCloud.
+    @objc public var synchronizable: Bool = false
     
-    guard status == errSecSuccess,
-      let dictionary = results as? [String: AnyObject],
-      let accessibility = dictionary[secAttrAccessible] as? String
-      else {
+    /// The identifierfor for kSecAttrService.
+    @objc public var serviceIdentifier: String?
+    
+    /// Records the query parameters of the last operation.
+    @objc public var queryDictionary: [String: Any]?
+    
+    /// Records the status of the last operation result.
+    @objc public var osStatus: OSStatus = errSecSuccess
+    
+
+    /// Instantiates a DYFSwiftKeychain object.
+    ///
+    /// - Parameter serviceIdentifier: The identifier for service.
+    @objc public convenience init(serviceIdentifier: String?) {
+        self.init()
+        self.serviceIdentifier = serviceIdentifier
+    }
+    
+    /// The lock prevents the code to be run simultaneously from multiple threads which may result in crashing.
+    private var lock: NSLock { return NSLock() }
+    
+    /// Creates an instance of DYFSwiftKeychain with the class method.
+    ///
+    /// - Returns: An instance of DYFSwiftKeychain.
+    @objc public class func createKeychain() -> DYFSwiftKeychain {
+        return DYFSwiftKeychain()
+    }
+    
+    /// Returns a keychain that copies the current DYFSwiftKeychain instance.
+    ///
+    /// - Returns: A DYFSwiftKeychain object.
+    @objc open override func copy() -> Any {
+        
+        let keychain = DYFSwiftKeychain.createKeychain()
+        keychain.accessGroup       = self.accessGroup
+        keychain.synchronizable    = self.synchronizable
+        keychain.serviceIdentifier = self.serviceIdentifier
+        keychain.queryDictionary   = self.queryDictionary
+        keychain.osStatus          = self.osStatus
+        
+        return keychain
+    }
+    
+    /// Stores or updates the text value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The text value to be written to the keychain.
+    ///   - key: The key which the text is stored in the keychain.
+    /// - Returns: True if the text was successfully written to the keychain, false otherwise.
+    @discardableResult
+    @objc public func add(_ value: String?, forKey key: String) -> Bool {
+        
+        let opts = DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked
+        
+        return add(value, forKey: key, options: opts)
+    }
+    
+    @discardableResult
+    /// Stores or updates the text value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The text value to be written to the keychain.
+    ///   - key: The key which the text is stored in the keychain.
+    ///   - options: The options indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the text was successfully written to the keychain, false otherwise.
+    @objc public func add(_ value: String?, forKey key: String, options: DYFSwiftKeychainAccessOptions) -> Bool {
+        
+        let v = value?.data(using: String.Encoding.utf8)
+        let opts = toOpts(options)
+        
+        return set(v, forKey: key, withAccess: opts)
+    }
+    
+    @discardableResult
+    /// Stores or updates the text value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The text value to be written to the keychain.
+    ///   - key: The key which the text is stored in the keychain.
+    ///   - access: The parameter indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychain.AccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the text was successfully written to the keychain, false otherwise.
+    public func set(_ value: String?, forKey key: String, withAccess access: DYFSwiftKeychain.AccessOptions? = nil) -> Bool {
+        
+        let v = value?.data(using: String.Encoding.utf8)
+        
+        return set(v, forKey: key, withAccess: access)
+    }
+    
+    /// Stores or updates the data in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The data to be written to the keychain.
+    ///   - key: The key which the data is stored in the keychain.
+    /// - Returns: True if the data was successfully written to the keychain, false otherwise.
+    @discardableResult
+    @objc public func addData(_ value: Data?, forKey key: String) -> Bool {
+        
+        let opts = DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked
+        
+        return addData(value, forKey: key, options: opts)
+    }
+    
+    /// Stores or updates the data in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The data to be written to the keychain.
+    ///   - key: The key which the data is stored in the keychain.
+    ///   - options: The options indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the data was successfully written to the keychain, false otherwise.
+    @discardableResult
+    @objc public func addData(_ value: Data?, forKey key: String, options: DYFSwiftKeychainAccessOptions) -> Bool {
+        
+        let opts = toOpts(options)
+        
+        return set(value, forKey: key, withAccess: opts)
+    }
+    
+    /// Stores or updates the data in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: Stores or updates the data in the keychain item by the given key.
+    ///   - key: The key which the data is stored in the keychain.
+    ///   - access: The parameter indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychain.AccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the data was successfully written to the keychain, false otherwise.
+    @discardableResult
+    public func set(_ value: Data?, forKey key: String, withAccess access: DYFSwiftKeychain.AccessOptions? = nil) -> Bool {
+        
+        // The lock prevents the code to be run simultaneously from multiple threads which may result in crashing.
+        lock.lock()
+        defer { lock.unlock() }
+        
+        let accessible = access?.value ?? DYFSwiftKeychain.AccessOptions.defaultOption.value
+        
+        var query: [String: Any] = supplyQueryDictionary()
+        query[DYFSwiftKeychain.Constants.account] = key
+        query[DYFSwiftKeychain.Constants.accessible] = accessible
+        queryDictionary = query
+        
+        var ignore: CFTypeRef? = nil
+        let status = SecItemCopyMatching(query as CFDictionary, &ignore)
+        
+        guard status == errSecSuccess else {
+            
+            if let v = value {
+                query[DYFSwiftKeychain.Constants.valueData] = v
+                queryDictionary?[DYFSwiftKeychain.Constants.valueData] = v
+                
+                osStatus = SecItemAdd(query as CFDictionary, nil)
+            } else {
+                osStatus = errSecInvalidPointer // -67675, An invalid pointer was encountered.
+            }
+            
+            return osStatus == errSecSuccess
+        }
+        
+        if let v = value {
+            let updatedDictionary: [String: Any] = [
+                DYFSwiftKeychain.Constants.valueData: v
+            ]
+            
+            osStatus = SecItemUpdate(query as CFDictionary, updatedDictionary as CFDictionary)
+        } else {
+            deleteWithoutLock(key)
+            osStatus = errSecInvalidPointer // -67675, An invalid pointer was encountered.
+        }
+        
+        return osStatus == errSecSuccess
+    }
+    
+    /// Stores or updates the boolean value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The boolean value to be written to the keychain.
+    ///   - key: The key which the boolean value is stored in the keychain.
+    /// - Returns: True if the boolean value was successfully written to the keychain, false otherwise.
+    @discardableResult
+    @objc public func addBool(_ value: Bool, forKey key: String) -> Bool {
+        
+        let opts = DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked
+        
+        return addBool(value, forKey: key, options: opts)
+    }
+    
+    /// Stores or updates the boolean value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The boolean value to be written to the keychain.
+    ///   - key: The key which the boolean value is stored in the keychain.
+    ///   - options: The options indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychainAccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the boolean value was successfully written to the keychain, false otherwise.
+    @discardableResult
+    @objc public func addBool(_ value: Bool, forKey key: String, options: DYFSwiftKeychainAccessOptions) -> Bool {
+        
+        let opts = toOpts(options)
+        
+        return set(value, forKey: key, withAccess: opts)
+    }
+    
+    /// Stores or updates the boolean value in the keychain item by the given key.
+    ///
+    /// - Parameters:
+    ///   - value: The boolean value to be written to the keychain.
+    ///   - key: The key which the boolean value is stored in the keychain.
+    ///   - access: The parameter indicates when you app needs access to the text in the keychain. By the default DYFSwiftKeychain.AccessOptions.accessibleWhenUnlocked option is used that permits the data to be accessed only while the device is unlocked by the user.
+    /// - Returns: True if the boolean value was successfully written to the keychain, false otherwise.
+    @discardableResult
+    public func set(_ value: Bool, forKey key: String, withAccess access: DYFSwiftKeychain.AccessOptions? = nil) -> Bool {
+        
+        let v = value ? "1" : "0"
+        let data = v.data(using: String.Encoding.utf8)
+        
+        return set(data, forKey: key, withAccess: access)
+    }
+    
+    /// Retrieves the text value from the keychain by the given key.
+    ///
+    /// - Parameter key: The key that is used to read the keychain item.
+    /// - Returns: The text value from the keychain. Nil if unable to read the item.
+    @discardableResult
+    @objc public func get(_ key: String) -> String? {
+        
+        if let data = getData(key) {
+            
+            if let s = String(data: data, encoding: String.Encoding.utf8) {
+                return s
+            }
+            
+            osStatus = errSecInvalidEncoding // -67853, the encoding was not valid.
+        }
+        
         return nil
     }
     
-    return KeychainItemAccessibility.accessbilityForAttributeValue(accessibility as CFString)
-  }
-  
-  /// Get the keys of all keychain entries matching the current `serviceName` and `accessGroup`.
-  open func allKeys() -> Set<String> {
-    var queryDictionary: [String: Any] = [
-      secClass: kSecClassGenericPassword,
-      secAttrService: serviceName,
-      secReturnAttributes: kCFBooleanTrue!,
-      secMatchLimit: kSecMatchLimitAll
-    ]
-    
-    if let accessGroup = accessGroup {
-      queryDictionary[secAttrAccessGroup] = accessGroup
+    /// Retrieves the data from the keychain by the given key.
+    ///
+    /// - Parameter key: The key that is used to read the keychain item.
+    /// - Returns: The data from the keychain. Nil if unable to read the item.
+    @discardableResult
+    @objc public func getData(_ key: String) -> Data? {
+        return getData(key, asReference: false)
     }
     
-    var results: AnyObject?
-    let status = SecItemCopyMatching(queryDictionary as CFDictionary, &results)
-    
-    guard status == errSecSuccess else { return [] }
-    
-    var keys = Set<String>()
-    
-    if let results = results as? [[String: AnyObject]] {
-      
-      keys = results.reduce(into: Set<String>()) {
-        (result: inout Set<String>, attr: [String: AnyObject]) in
-        if let accountData = attr[secAttrAccount] as? Data,
-          let key = String(data: accountData, encoding: .utf8) {
-          result.insert(key)
+    /// Retrieves the data from the keychain by the given key.
+    ///
+    /// - Parameters:
+    ///   - key: The key that is used to read the keychain item.
+    ///   - asReference: If true, returns the data as reference (needed for things like NEVPNProtocol).
+    /// - Returns: The data from the keychain. Nil if unable to read the item.
+    @discardableResult
+    @objc public func getData(_ key: String, asReference: Bool = false) -> Data? {
+        
+        lock.lock()
+        defer { lock.unlock() }
+        
+        var query: [String: Any] = supplyQueryDictionary()
+        query[DYFSwiftKeychain.Constants.account] = key
+        query[DYFSwiftKeychain.Constants.matchLimit] = kSecMatchLimitOne
+        
+        if asReference {
+            query[DYFSwiftKeychain.Constants.returnReference] = kCFBooleanTrue
+        } else {
+            query[DYFSwiftKeychain.Constants.returnData] = kCFBooleanTrue
         }
-      }
+        queryDictionary = query
+        
+        var result: AnyObject?
+        
+        osStatus = withUnsafeMutablePointer(to: &result) {
+            SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
+        }
+        
+        if osStatus == errSecSuccess {
+            return result as? Data
+        }
+        
+        return nil
     }
     
-    return keys
-  }
-  
-  /// MARK: public getters
-  
-  /// Returns an object that conforms to `Decodable` for a specified key.
-  ///
-  /// - parameter forKey: The key of data to be looked up.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: The `T` object associated with the key if it exists. If no data exists, returns nil.
-  open func object<T>(
-    of type: T.Type,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> T? where T:Decodable {
-    guard let data = data(forKey: key, withAccessibility: accessibility) else {
-      return nil
+    /// Retrieves the boolean value from the keychain by the given key.
+    ///
+    /// - Parameter key: The key that is used to read the keychain item.
+    /// - Returns: The boolean value from the keychain. False if unable to read the item.
+    @discardableResult
+    @objc public func getBool(_ key: String) -> Bool {
+        
+        guard let bool = getBool(key) else {
+            return false
+        }
+        
+        return bool
     }
     
-    return try? JSONDecoder().decode(T.self, from: data)
-  }
-  
-  
-  /// Returns an object that conforms to `Decodable` for a specified key.
-  ///
-  /// - parameter forKey: The key of data to be looked up.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: The `T` object associated with the key if it exists. If no data exists, returns nil.
-  open func object<T>(
-    of type: T.Type,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> T?
-    where  T:Numeric, T:Decodable {
-    guard let data = data(forKey: key, withAccessibility: accessibility) else {
-      return nil
-    }
-    
-    return try? JSONDecoder().decode([T].self, from: data)[0]
-  }
-  
-  /// Returns a string for a specified key.
-  ///
-  /// - parameter forKey: The key of data to be looked up.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: The string associated with the key if it exists. If no data exists, returns nil.
-  open func string(
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> String? {
-    guard let data = data(forKey: key, withAccessibility: accessibility) else {
-      return nil
-    }
-    
-    return String(data: data, encoding: .utf8)
-  }
-    
-    open func bool(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool? {
-        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+    /// Retrieves the boolean value from the keychain by the given key.
+    ///
+    /// - Parameter key: The key that is used to read the keychain item.
+    /// - Returns: The boolean value from the keychain. Nil if unable to read the item.
+    @discardableResult
+    public func getBool(_ key: String) -> Bool? {
+        
+        guard let data  = getData(key) else { return nil }
+        
+        guard let s = String(data: data, encoding: String.Encoding.utf8) else {
             return nil
         }
         
-        return numberValue.boolValue
+        return Int(s)! == 1
     }
-  
-  /// Returns a data object for a specified key.
-  ///
-  /// - parameter forKey: The key of data to be looked up.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: The data object associated with the key if it exists. If no data exists, returns nil.
-  open func data(
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Data? {
-    var queryDictionary = setupQueryDictionary(forKey: key, withAccessibility: accessibility)
     
-    // Limit result to 1
-    queryDictionary[secMatchLimit] = kSecMatchLimitOne
+    /// Deletes the single keychain item by the specified key.
+    ///
+    /// - Parameter key: The key which is used to delete the keychain item.
+    /// - Returns: True if the item was successfully deleted, false otherwise.
+    @discardableResult
+    @objc public func delete(_ key: String) -> Bool {
+        
+        lock.lock()
+        defer { lock.unlock() }
+        
+        let result = deleteWithoutLock(key)
+        
+        return result
+    }
     
-    // Specify we want data only
-    queryDictionary[secReturnData] = kCFBooleanTrue
+    /// Same as `delete`, but it is not thread safe.
+    ///
+    /// - Parameter key: The key which is used to delete the keychain item.
+    /// - Returns: True if the item was successfully deleted, false otherwise.
+    @discardableResult
+    private func deleteWithoutLock(_ key: String) -> Bool {
+        
+        var query: [String: Any] = supplyQueryDictionary()
+        query[DYFSwiftKeychain.Constants.account] = key
+        queryDictionary = query
+        
+        osStatus = SecItemDelete(query as CFDictionary)
+        
+        return osStatus == errSecSuccess
+    }
     
-    // Search
-    var result: AnyObject?
-    let status = SecItemCopyMatching(queryDictionary as CFDictionary, &result)
+    /// Deletes all keychain items used by the app. Note that this method deletes all items regardless of those used keys.
+    ///
+    /// - Returns: True if all keychain items was successfully deleted, false otherwise.
+    @discardableResult
+    @objc public func clear() -> Bool {
+        
+        lock.lock()
+        defer { lock.unlock() }
+        
+        let query: [String: Any] = supplyQueryDictionary()
+        queryDictionary = query
+        
+        osStatus = SecItemDelete(query as CFDictionary)
+        
+        return osStatus == errSecSuccess // 0, no error.
+    }
     
-    return (status == errSecSuccess) ? (result as? Data) : nil
-  }
-    
-    open func object(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> NSCoding? {
-        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
-            return nil
+    /// Supplies a query dictionary to modify the keychain item.
+    ///
+    /// - Parameter shouldAddItem: Use `true` when the dictionary will be used with `SecItemAdd` or `SecItemUpadte` method. For getting and deleting items, use `false`
+    /// - Returns: A query dictionary to modify the keychain item.
+    private func supplyQueryDictionary(shouldAddItem: Bool = false) -> [String: Any] {
+        
+        var query: [String: Any] = [
+            DYFSwiftKeychain.Constants.kClass: kSecClassGenericPassword
+        ]
+        
+        if let accessGroup = accessGroup {
+            query[DYFSwiftKeychain.Constants.accessGroup] = accessGroup
         }
         
-        return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? NSCoding
-    }
-  
-  /// MARK: Public setters
-  
-  /// Save an `Encodable` compliant object associated with a specific key.
-  /// If the key already exists, the data will be overritten.
-  ///
-  /// - parameter value:
-  /// - parameter forKey: The key of data to be set.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `True` if set was successful.
-  @discardableResult open func set<T>(
-    _ value: T,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool where T:Encodable {
-    guard let data = try? JSONEncoder().encode(value) else { return false }
-    
-    return set(data, forKey: key, withAccessibility: accessibility)
-  }
-  
-  /// Save an `Encodable` compliant object associated with a specific key.
-  /// If the key already exists, the data will be overritten.
-  ///
-  /// - parameter value:
-  /// - parameter forKey: The key of data to be set.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `True` if set was successful.
-  @discardableResult open func set<T>(
-    _ value: T,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool
-    where T:Numeric, T:Encodable {
-    guard let data = try? JSONEncoder().encode([value]) else { return false }
-    
-    return set(data, forKey: key, withAccessibility: accessibility)
-  }
-  
-  /// Save a `String` associated with a specific key. If the key already exists, the
-  /// data will be overritten.
-  ///
-  /// - parameter value:
-  /// - parameter forKey: The key of data to be set.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `True` if set was successful.
-  @discardableResult open func set(
-    _ value: String,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool {
-    guard let data = value.data(using: .utf8) else { return false }
-    
-    return set(data, forKey: key, withAccessibility: accessibility)
-  }
-  
-  /// Save a `Data` associated with a specific key. If the key already exists, the
-  /// data will be overritten.
-  ///
-  /// - parameter value:
-  /// - parameter forKey: The key of data to be set.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `True` if set was successful.
-  @discardableResult open func set(
-    _ value: Data,
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool {
-    var queryDictionary: [String: Any] = setupQueryDictionary(forKey: key, withAccessibility: accessibility)
-    queryDictionary[secValueData] = value
-    
-    if accessibility == nil {
-      // Default protection level. The data is only valid when the device is unlocked.
-      queryDictionary[secAttrAccessible] = KeychainItemAccessibility.whenUnlocked.keychainAttrValue
+        if synchronizable {
+            let key = DYFSwiftKeychain.Constants.synchronizable
+            query[key] = shouldAddItem ? kCFBooleanTrue : kSecAttrSynchronizableAny
+        }
+        
+        if let serviceId = serviceIdentifier {
+            query[DYFSwiftKeychain.Constants.service] = serviceId
+        }
+        
+        return query
     }
     
-    let status = SecItemAdd(queryDictionary as CFDictionary, nil)
+}
+
+// MARK: - Extension DYFSwiftKeychain
+extension DYFSwiftKeychain {
     
-    if status == errSecSuccess {
-      return true
-    }
-    else if status == errSecDuplicateItem {
-      return update(value, forKey: key, withAccessibility: accessibility)
-    }
-    else {
-      return false
-    }
-  }
-  
-  /// Remove an object associated with a specific key. If re-using a key but with a different accessibility,
-  /// you should call this method to delete the previous value first.
-  ///
-  /// - parameter forKey: The key of data to be deleted.
-  /// - parameter withAccessibility: Optional accessibility level to use when looking up the keychain item.
-  /// - returns: `True` if successful, `False` otherwise.
-  @discardableResult open func removeObject(
-    forKey key: String,
-    withAccessibility accessbility: KeychainItemAccessibility? = nil) -> Bool {
-    let queryDictionary: [String: Any] = setupQueryDictionary(forKey: key, withAccessibility: accessbility)
-    let status = SecItemDelete(queryDictionary as CFDictionary)
-    
-    return (status == errSecSuccess)
-  }
-  
-  /// Remove all keychain data added through the keychain wrapper.
-  @discardableResult open func removeAllKeys() -> Bool {
-    var queryDictionary: [String: Any] = [secClass: kSecClassGenericPassword]
-    queryDictionary[secAttrService] = serviceName
-    
-    if let accessGroup = accessGroup {
-      queryDictionary[secAttrAccessGroup] = accessGroup
-    }
-    
-    let status = SecItemDelete(queryDictionary as CFDictionary)
-    
-    return (status == errSecSuccess)
-  }
-  
-  /// Remove all keychain data even those not added by this keychain wrapper
-  ///
-  /// - Warning: This may remove custom keychain items you did not add via the keychain wrapper.
-  ///
-  open class func wipeKeychain() {
-    deleteKeychainSecClass(kSecClassGenericPassword)
-    deleteKeychainSecClass(kSecClassInternetPassword)
-    deleteKeychainSecClass(kSecClassCertificate)
-    deleteKeychainSecClass(kSecClassKey)
-    deleteKeychainSecClass(kSecClassIdentity)
-  }
-  
-  
-  /// Private methods
-  
-  /// Remove all items for a given keychain item class.
-  @discardableResult private class func deleteKeychainSecClass(
-    _ destSecClass: AnyObject) -> Bool {
-    let queryDictionary = [secClass: destSecClass]
-    let status = SecItemDelete(queryDictionary as CFDictionary)
-    
-    return (status == errSecSuccess)
-  }
-  
-  /// Update existing data associated with a key name.
-  private func update(
-    _ value: Data,
-    forKey key: String,
-    withAccessibility accessbility: KeychainItemAccessibility? = nil) -> Bool {
-    let queryDictionary = setupQueryDictionary(
-      forKey: key, withAccessibility: accessbility)
-    let updateDictionary = [secValueData: value]
-    
-    let status = SecItemUpdate(
-      queryDictionary as CFDictionary, updateDictionary as CFDictionary)
-    
-    return (status == errSecSuccess)
-  }
-  
-  /// Setup the query dictionary used to access the keychain on iOS for a specific key name.
-  ///
-  /// - parameter forKey: The key this query is for
-  /// - parameter withAccessibility: Optional accessibility to use when setting the keychain item.
-  /// Default to `.whenUnlocked`
-  /// - returns: A dictionary with all the needed properties setup to access the keychain on iOS.
-  private func setupQueryDictionary(
-    forKey key: String,
-    withAccessibility accessibility: KeychainItemAccessibility? = nil) -> [String: Any] {
-    var queryDictionary: [String: Any] = [secClass: kSecClassGenericPassword]
-    queryDictionary[secAttrService] = serviceName
-    
-    if let accessibility = accessibility {
-      queryDictionary[secAttrAccessible] = accessibility.keychainAttrValue
+    /// These options are used to determine when a keychain item should be readable.
+    public enum AccessOptions {
+        
+        /// Converts a corresponding enumeration value to a string.
+        var value: String {
+            switch self {
+            case .accessibleWhenUnlocked:
+                return kSecAttrAccessibleWhenUnlocked as String
+                
+            case .accessibleWhenUnlockedThisDeviceOnly:
+                return kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String
+                
+            case .accessibleAfterFirstUnlock:
+                return kSecAttrAccessibleAfterFirstUnlock as String
+                
+            case .accessibleAfterFirstUnlockThisDeviceOnly:
+                return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String
+                
+            case .acessibleWhenPasscodeSetThisDeviceOnly:
+                return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly as String
+                
+            case .accessibleAlways:
+                return kSecAttrAccessibleAlways as String
+                
+            case .accessibleAlwaysThisDeviceOnly:
+                return kSecAttrAccessibleAlwaysThisDeviceOnly as String
+            }
+        }
+        
+        /// The default value is accessibleWhenUnlocked
+        static var defaultOption: AccessOptions {
+            return .accessibleWhenUnlocked
+        }
+        
+        /// The data in the keychain item can be accessed only while the device is unlocked by the user.
+        ///
+        /// This is recommended for items that need to be accessible only while the application is in the foreground. Items with this attribute migrate to a new device when using encrypted backups.
+        /// This is the default value for keychain items added without explicitly setting an accessibility constant.
+        case accessibleWhenUnlocked
+        /// The data in the keychain item can be accessed only while the device is unlocked by the user.
+        ///
+        /// This is recommended for items that need to be accessible only while the application is in the foreground. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+        case accessibleWhenUnlockedThisDeviceOnly
+        
+        /// The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+        ///
+        /// After the first unlock, the data remains accessible until the next restart. This is recommended for items that need to be accessed by background applications. Items with this attribute migrate to a new device when using encrypted backups.
+        case accessibleAfterFirstUnlock
+        ///  The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+        ///
+        /// After the first unlock, the data remains accessible until the next restart. This is recommended for items that need to be accessed by background applications. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+        case accessibleAfterFirstUnlockThisDeviceOnly
+        
+        /// The data in the keychain can only be accessed when the device is unlocked. Only available if a passcode is set on the device.
+        ///
+        /// This is recommended for items that only need to be accessible while the application is in the foreground. Items with this attribute never migrate to a new device. After a backup is restored to a new device, these items are missing. No items can be stored in this class on devices without a passcode. Disabling the device passcode causes all items in this class to be deleted.
+        case acessibleWhenPasscodeSetThisDeviceOnly
+        
+        /// The data in the keychain item can always be accessed regardless of whether the device is locked.
+        ///
+        /// This is not recommended for application use. Items with this attribute migrate to a new device when using encrypted backups.
+        case accessibleAlways
+        /// The data in the keychain item can always be accessed regardless of whether the device is locked.
+        ///
+        /// This is not recommended for application use. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+        case accessibleAlwaysThisDeviceOnly
     }
     
-    if let accessGroup = accessGroup {
-      queryDictionary[secAttrAccessGroup] = accessGroup
+    /// Constants used by the library
+    public struct Constants {
+        
+        /// Specifies an access group which is used to share keychain items between apps.
+        public static var accessGroup: String {
+            return toString(kSecAttrAccessGroup)
+        }
+        
+        /// The value indicates when your app needs access to the data in a keychain item.
+        public static var accessible: String {
+            return toString(kSecAttrAccessible)
+        }
+        
+        /// The value indicates whether the item is synchronized to other devices through iCloud.
+        ///
+        /// Indicates whether the item in question is synchronized to other devices through iCloud. To add a new synchronizable item, or to obtain synchronizable results from a query, supply this key with a value of kCFBooleanTrue. If the key is not supplied, or has a value of kCFBooleanFalse, then no synchronizable items are added or returned. Use kSecAttrSynchronizableAny to query for both synchronizable and non-synchronizable results.
+        public static var synchronizable: String {
+            return toString(kSecAttrSynchronizable)
+        }
+        
+        /// A value is a string indicating the item's account name.
+        public static var account: String {
+            return toString(kSecAttrAccount)
+        }
+        
+        /// A key whose value is a string indicating the item's service.
+        ///
+        /// Represents the service associated with this item. Items of class kSecClassGenericPassword have this attribute.
+        public static var service: String {
+            return toString(kSecAttrService)
+        }
+        
+        /// A value is the item's class.
+        public static var kClass: String {
+            return toString(kSecClass)
+        }
+        
+        /// A value indicates the match limit.
+        public static var matchLimit: String {
+            return toString(kSecMatchLimit)
+        }
+        
+        /// A value is the item's data.
+        public static var valueData: String {
+            return toString(kSecValueData)
+        }
+        
+        /// A value is a Boolean indicating whether or not to return item data.
+        public static var returnData: String {
+            return toString(kSecReturnData)
+        }
+        
+        /// A value is a Boolean indicating whether or not to return a persistent reference to an item.
+        public static var returnReference: String {
+            return toString(kSecReturnPersistentRef)
+        }
+        
+        /// Converts a CFString object to a string.
+        ///
+        /// - Parameter value: A reference to a CFString object.
+        /// - Returns: A string.
+        static func toString(_ value: CFString) -> String {
+            return value as String
+        }
+        
     }
     
-    let encodedKey = key.data(using: .utf8)
+    /// Converts a DYFSwiftKeychainAccessOptions value to a DYFSwiftKeychain.AccessOptions value.
+    ///
+    /// - Parameter opts: A DYFSwiftKeychainAccessOptions value.
+    /// - Returns: A DYFSwiftKeychain.AccessOptions value.
+    private func toOpts(_ opts: DYFSwiftKeychainAccessOptions) -> DYFSwiftKeychain.AccessOptions? {
+        
+        var options: DYFSwiftKeychain.AccessOptions? = nil
+        
+        switch opts {
+        case .accessibleWhenUnlocked:
+            options = DYFSwiftKeychain.AccessOptions.accessibleWhenUnlocked
+            break
+        case .accessibleWhenUnlockedThisDeviceOnly:
+            options = DYFSwiftKeychain.AccessOptions.accessibleWhenUnlockedThisDeviceOnly
+            break
+        case .accessibleAfterFirstUnlock:
+            options = DYFSwiftKeychain.AccessOptions.accessibleAfterFirstUnlock
+            break
+        case .accessibleAfterFirstUnlockThisDeviceOnly:
+            options = DYFSwiftKeychain.AccessOptions.accessibleAfterFirstUnlockThisDeviceOnly
+            break
+        case .acessibleWhenPasscodeSetThisDeviceOnly:
+            options = DYFSwiftKeychain.AccessOptions.acessibleWhenPasscodeSetThisDeviceOnly
+            break
+        case .accessibleAlways:
+            options = DYFSwiftKeychain.AccessOptions.accessibleAlways
+            break
+        case .accessibleAlwaysThisDeviceOnly:
+            options = DYFSwiftKeychain.AccessOptions.accessibleAlwaysThisDeviceOnly
+            break
+        default: break
+        }
+        
+        return options
+    }
     
-    queryDictionary[secAttrGeneric] = encodedKey
-    queryDictionary[secAttrAccount] = encodedKey
+}
+
+/// Used to represent accessible access options.
+@objc public enum DYFSwiftKeychainAccessOptions: UInt8 {
     
-    return queryDictionary
-  }
+    /// The data in the keychain item can be accessed only while the device is unlocked by the user.
+    ///
+    /// This is recommended for items that need to be accessible only while the application is in the foreground. Items with this attribute migrate to a new device when using encrypted backups.
+    /// This is the default value for keychain items added without explicitly setting an accessibility constant.
+    case accessibleWhenUnlocked
+    /// The data in the keychain item can be accessed only while the device is unlocked by the user.
+    ///
+    /// This is recommended for items that need to be accessible only while the application is in the foreground. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+    case accessibleWhenUnlockedThisDeviceOnly
+    
+    /// The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+    ///
+    /// After the first unlock, the data remains accessible until the next restart. This is recommended for items that need to be accessed by background applications. Items with this attribute migrate to a new device when using encrypted backups.
+    case accessibleAfterFirstUnlock
+    /// The data in the keychain item cannot be accessed after a restart until the device has been unlocked once by the user.
+    ///
+    /// After the first unlock, the data remains accessible until the next restart. This is recommended for items that need to be accessed by background applications. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+    case accessibleAfterFirstUnlockThisDeviceOnly
+    
+    /// The data in the keychain can only be accessed when the device is unlocked. Only available if a passcode is set on the device.
+    ///
+    /// This is recommended for items that only need to be accessible while the application is in the foreground. Items with this attribute never migrate to a new device. After a backup is restored to a new device, these items are missing. No items can be stored in this class on devices without a passcode. Disabling the device passcode causes all items in this class to be deleted.
+    case acessibleWhenPasscodeSetThisDeviceOnly
+    
+    /// The data in the keychain item can always be accessed regardless of whether the device is locked.
+    ///
+    /// This is not recommended for application use. Items with this attribute migrate to a new device when using encrypted backups.
+    case accessibleAlways
+    /// The data in the keychain item can always be accessed regardless of whether the device is locked.
+    ///
+    /// This is not recommended for application use. Items with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device, these items will not be present.
+    case accessibleAlwaysThisDeviceOnly
+    
+}
+
+extension DYFSwiftKeychain {
+ 
+    /// Device unique identification
+    public var UUIDString: String {
+        let key = String(describing: UUIDKey)
+        let uuidValue = DYFSwiftKeychain.shared.get(key)
+        guard let value = uuidValue else {
+            let uuid = UUID().uuidString
+            DYFSwiftKeychain.shared.set(uuid, forKey: key)
+            
+            return uuid
+        }
+        
+        return value
+    }
 }
