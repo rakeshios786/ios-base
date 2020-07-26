@@ -22,7 +22,7 @@ struct App {
                    userInfo: [NSLocalizedDescriptionKey: localizedDescription])
   }
 }
-
+//
 enum ErrorDomain: String {
   case generic = "GenericError"
   case parsing = "ParsingError"
