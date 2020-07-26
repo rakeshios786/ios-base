@@ -205,7 +205,6 @@ open class KeychainWrapper {
     }
   
   // MARK: Public setters
-  
   /// Save an `Encodable` compliant object associated with a specific key.
   /// If the key already exists, the data will be overritten.
   ///
