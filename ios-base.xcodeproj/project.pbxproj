@@ -29,6 +29,7 @@
 		236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */; };
 		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
 		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
+		23716D9724CE059C001AB679 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23716D9624CE059C001AB679 /* KeychainWrapper.swift */; };
 		2387833D24CDE3E1005D6197 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387833C24CDE3E1005D6197 /* BaseViewController.swift */; };
 		2387833F24CDE514005D6197 /* HandleDarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387833E24CDE514005D6197 /* HandleDarkMode.swift */; };
 		49B55E7EFE4B4AB33F9D45DC /* Pods_ios_base_ios_baseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86489602094342400B80269 /* Pods_ios_base_ios_baseUITests.framework */; };
@@ -122,6 +123,7 @@
 		236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
 		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
 		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
+		23716D9624CE059C001AB679 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeychainWrapper.swift; path = "ios-base/Helpers/DarkMode/KeychainWrapper.swift"; sourceTree = SOURCE_ROOT; };
 		2387833C24CDE3E1005D6197 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2387833E24CDE514005D6197 /* HandleDarkMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleDarkMode.swift; sourceTree = "<group>"; };
 		2A0D25B4038197B66DB96B4F /* Pods-ios-base.uitests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.uitests.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.uitests.xcconfig"; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		236A0B4924CD84C3001E8002 /* KeychainHelper */ = {
 			isa = PBXGroup;
 			children = (
+				23716D9624CE059C001AB679 /* KeychainWrapper.swift */,
 			);
 			path = KeychainHelper;
 			sourceTree = "<group>";
@@ -965,6 +968,7 @@
 				9B8EB5BD2475890A0082370F /* NetworkState.swift in Sources */,
 				9B88CC671CAB305900AE60C5 /* Constants.swift in Sources */,
 				9BAFB7BF2114D9910099DC61 /* HomeViewModel.swift in Sources */,
+				23716D9724CE059C001AB679 /* KeychainWrapper.swift in Sources */,
 				236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */,
 				9B715A461E28083600C0C039 /* PlaceholderTextView.swift in Sources */,
 				074D20D7248E98EC002A39B4 /* APIClient.swift in Sources */,
