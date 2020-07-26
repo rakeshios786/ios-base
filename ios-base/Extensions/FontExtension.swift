@@ -10,9 +10,9 @@ import UIKit
 import RSFontSizes
 
 extension UIFont {
-  var bold: UIFont { return withWeight(.bold) }
-  var semibold: UIFont { return withWeight(.semibold) }
-  var light: UIFont { return withWeight(.ultraLight) }
+  var bold: UIFont { withWeight(.bold) }
+  var semibold: UIFont { withWeight(.semibold) }
+  var light: UIFont { withWeight(.ultraLight) }
   
   private func withWeight(_ weight: UIFont.Weight) -> UIFont {
     var attributes = fontDescriptor.fontAttributes

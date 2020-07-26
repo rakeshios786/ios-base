@@ -51,7 +51,7 @@ open class BaseApiService<T>: APIService where T: TargetType {
   private var sharedProvider: MoyaProvider<T>!
 
   private var plugins: [PluginType] {
-    return [
+    [
       NetworkLoggerPlugin(
         verbose: true, responseDataFormatter: JSONResponseDataFormatter
       )

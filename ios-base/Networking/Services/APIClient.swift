@@ -58,7 +58,7 @@ class APIClient {
   }
   
   class func getBaseUrl() -> String {
-    return Bundle.main.object(forInfoDictionaryKey: "Base URL") as? String ?? ""
+    Bundle.main.object(forInfoDictionaryKey: "Base URL") as? String ?? ""
   }
   
   //Recursively build multipart params to send along with media in upload requests.

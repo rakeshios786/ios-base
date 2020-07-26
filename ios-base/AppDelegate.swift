@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication, open url: URL,
     sourceApplication: String?, annotation: Any
   ) -> Bool {
-    return ApplicationDelegate.shared.application(application, open: url,
+    ApplicationDelegate.shared.application(application, open: url,
                                                   sourceApplication: sourceApplication,
                                                   annotation: annotation)
   }

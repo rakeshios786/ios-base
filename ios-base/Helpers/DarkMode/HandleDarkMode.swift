@@ -20,7 +20,6 @@ class HandleDarkMode: NSObject {
     
     func setup() {
         DarkModeManager.setup()
-        
         if let value = KeychainWrapper.default.bool(forKey: "darkMode") {
             DMTraitCollection.current = value ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
         } else {
@@ -35,7 +34,6 @@ class HandleDarkMode: NSObject {
     func tongle() {
         if let value = KeychainWrapper.default.bool(forKey: "darkMode") {
             KeychainWrapper.default.set(!value, forKey: "darkMode")
-            
             DMTraitCollection.current = !value  ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
         } else {
             DMTraitCollection.current = DMTraitCollection(userInterfaceStyle: .light)

@@ -19,7 +19,6 @@ import UIKit
 open class BaseNavigator: Navigator {
   open var rootViewController: UINavigationController?
   open var currentViewController: UIViewController? {
-    return
       rootViewController?.visibleViewController ?? rootViewController?.topViewController
   }
 
@@ -216,7 +215,7 @@ public protocol Route {
 
 public extension Route {
   var transitionConfigurator: TransitionConfigurator? {
-    return nil
+    nil
   }
 }
 
