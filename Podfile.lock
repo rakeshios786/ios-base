@@ -33,6 +33,7 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
+  - FluentDarkModeKit (0.5.2)
   - GoogleAppMeasurement (6.0.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -79,6 +80,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 5.5.0)
   - FBSDKLoginKit (~> 5.5.0)
   - Firebase/Core (~> 6.1.0)
+  - FluentDarkModeKit
   - IQKeyboardManagerSwift (~> 6.1.1)
   - R.swift (~> 5.0.3)
   - RSFontSizes (~> 1.0.2)
@@ -96,6 +98,7 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseInstanceID
+    - FluentDarkModeKit
     - GoogleAppMeasurement
     - GoogleUtilities
     - IQKeyboardManagerSwift
@@ -117,6 +120,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 629301c2b9925f3537d4093a17a72751ae5b7084
   FirebaseCore: 66bdef3b310a026880e2a5bc8aa586ab62ce4543
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  FluentDarkModeKit: 78109bdbfb87c515543c0a52319da017c3843aae
   GoogleAppMeasurement: 51d8d9ea48f0ca44484d29cfbdef976fbd4fc336
   GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
@@ -127,6 +131,6 @@ SPEC CHECKSUMS:
   RSFontSizes: cf14ae41c2807b66573f7064528ccff8c98251c9
   Swifter: 2327ef5d872c638aebab79646ce494af508b0c8f
 
-PODFILE CHECKSUM: 4f3f540230adcc23bc2c88e628e6851c38a7c3b0
+PODFILE CHECKSUM: 1f36082eed463cbf8b86f4bdeb79e185040ccb3d
 
 COCOAPODS: 1.9.2

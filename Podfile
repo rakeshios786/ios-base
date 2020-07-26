@@ -22,6 +22,11 @@ target 'ios-base' do
   pod 'FBSDKLoginKit', '~> 5.5.0'
   # ------
   
+  # DarkMode --
+  pod 'FluentDarkModeKit'
+  # -------
+  
+  
   target 'ios-baseUITests' do
     inherit! :complete
     pod 'Swifter', '~> 1.4.7'
