@@ -13,7 +13,7 @@ public class Broadcaster {
     fileprivate static var observersDic = [String: Any]()
     
     fileprivate static let notificationQueue = DispatchQueue(label: "com.rootstrap.notification.center.dispatch.queue", attributes: .concurrent)
-    
+        //
     public static func register<T>(_ protocolType: T.Type, observer: T) {
         let key = "\(protocolType)"
         safeSet(key: key, object: observer as AnyObject)

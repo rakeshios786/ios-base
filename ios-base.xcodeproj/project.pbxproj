@@ -26,10 +26,6 @@
 		074D20DD248ECEAC002A39B4 /* BaseURLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D20DC248ECEAC002A39B4 /* BaseURLConvertible.swift */; };
 		07741D72218CDED600DB3B97 /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07741D71218CDED600DB3B97 /* FirstViewModel.swift */; };
 		0ABFB8901FA366D90098F751 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABFB8921FA366D90098F751 /* Main.storyboard */; };
-<<<<<<< HEAD
-=======
-		236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5224CD8655001E8002 /* KeychainWrapper.swift */; };
->>>>>>> f2c0d9b21d67c8960c14fa9ff709fe51f0e7cc6d
 		236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */; };
 		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
 		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
@@ -124,10 +120,6 @@
 		0ABFB8961FA366EC0098F751 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		0E4800422B5D4DDA2D437100 /* Pods-ios-base-ios-baseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base-ios-baseUITests.release.xcconfig"; path = "Target Support Files/Pods-ios-base-ios-baseUITests/Pods-ios-base-ios-baseUITests.release.xcconfig"; sourceTree = "<group>"; };
 		18C57D0B131511ACAD07441F /* Pods_AcceptanceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcceptanceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-<<<<<<< HEAD
-=======
-		236A0B5224CD8655001E8002 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
->>>>>>> f2c0d9b21d67c8960c14fa9ff709fe51f0e7cc6d
 		236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
 		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
 		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
@@ -352,11 +344,7 @@
 		236A0B4924CD84C3001E8002 /* KeychainHelper */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				23716D9624CE059C001AB679 /* KeychainWrapper.swift */,
-=======
-				236A0B5224CD8655001E8002 /* KeychainWrapper.swift */,
->>>>>>> f2c0d9b21d67c8960c14fa9ff709fe51f0e7cc6d
 			);
 			path = KeychainHelper;
 			sourceTree = "<group>";
@@ -965,10 +953,6 @@
 				9B3AA39B1ED35013005A4D26 /* SignUpViewController.swift in Sources */,
 				9B5EAB4A232C146D00B9CE3C /* TextFieldExtension.swift in Sources */,
 				9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */,
-<<<<<<< HEAD
-=======
-				236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */,
->>>>>>> f2c0d9b21d67c8960c14fa9ff709fe51f0e7cc6d
 				FE06840322CE7ED400C6294F /* R.generated.swift in Sources */,
 				FE4D635C22B2C75400685161 /* Navigator.swift in Sources */,
 				FE251D0722A7FE0F00E0DE90 /* DataExtension.swift in Sources */,
