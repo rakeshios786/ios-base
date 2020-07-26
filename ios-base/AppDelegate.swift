@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
     
     IQKeyboardManager.shared.enable = true
+    
+    //Enable DarkMode
+    HandleDarkMode.shared.setup()
 
     let rootVC = AppNavigator.shared.rootViewController
     window?.rootViewController = rootVC

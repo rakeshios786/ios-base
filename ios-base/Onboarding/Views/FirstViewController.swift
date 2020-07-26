@@ -42,6 +42,7 @@ class FirstViewController: BaseViewController,
   }
 
   @IBAction func signInTapped() {
+    HandleDarkMode.shared.tongle()
     AppNavigator.shared.navigate(to: OnboardingRoutes.signIn, with: .push)
   }
 
