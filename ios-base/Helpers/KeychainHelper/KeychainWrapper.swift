@@ -165,6 +165,14 @@ open class KeychainWrapper {
     
     return String(data: data, encoding: .utf8)
   }
+    
+    open func bool(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool? {
+        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+            return nil
+        }
+        
+        return numberValue.boolValue
+    }
   
   /// Returns a data object for a specified key.
   ///
@@ -188,6 +196,14 @@ open class KeychainWrapper {
     
     return (status == errSecSuccess) ? (result as? Data) : nil
   }
+    
+    open func object(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> NSCoding? {
+        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
+            return nil
+        }
+        
+        return NSKeyedUnarchiver.unarchiveObject(with: keychainData) as? NSCoding
+    }
   
   /// MARK: Public setters
   
