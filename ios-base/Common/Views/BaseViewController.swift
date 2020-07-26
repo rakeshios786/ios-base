@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Foundation
 import UIKit
+import FluentDarkModeKit
 
 class BaseViewController: UIViewController {
     
@@ -18,6 +18,10 @@ class BaseViewController: UIViewController {
         if #available(iOS 13.0, *) {
             overrideUserInterfaceStyle = .light
         }
+        
+        //Set DarkMode Colors
+        view.backgroundColor = HandleColors.viewBackgroundColor
+        // --------
         
         // Localization Keys Handle---
         self.updateLabels()

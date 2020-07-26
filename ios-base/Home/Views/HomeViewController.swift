@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, ActivityIndicatorPresenter {
+class HomeViewController: BaseViewController, ActivityIndicatorPresenter {
   
   // MARK: - Outlets
   

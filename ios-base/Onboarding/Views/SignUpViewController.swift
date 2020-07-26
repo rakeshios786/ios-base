@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, ActivityIndicatorPresenter {
+class SignUpViewController: BaseViewController, ActivityIndicatorPresenter {
   
   // MARK: - Outlets
   
