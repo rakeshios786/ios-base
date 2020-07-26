@@ -34,6 +34,7 @@
 		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
 		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
 		2387833D24CDE3E1005D6197 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387833C24CDE3E1005D6197 /* BaseViewController.swift */; };
+		2387833F24CDE514005D6197 /* HandleDarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387833E24CDE514005D6197 /* HandleDarkMode.swift */; };
 		49B55E7EFE4B4AB33F9D45DC /* Pods_ios_base_ios_baseUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86489602094342400B80269 /* Pods_ios_base_ios_baseUITests.framework */; };
 		88322866B1B0807F4161B0C7 /* Pods_ios_base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5331948D49F73551E188FC1 /* Pods_ios_base.framework */; };
 		9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0C72691C738D3400BAF3B1 /* AppDelegate.swift */; };
@@ -130,6 +131,7 @@
 		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
 		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
 		2387833C24CDE3E1005D6197 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2387833E24CDE514005D6197 /* HandleDarkMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandleDarkMode.swift; sourceTree = "<group>"; };
 		2A0D25B4038197B66DB96B4F /* Pods-ios-base.uitests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.uitests.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.uitests.xcconfig"; sourceTree = "<group>"; };
 		3F7782D67A29B3F015B36B72 /* Pods-ios-base.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.debug.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.debug.xcconfig"; sourceTree = "<group>"; };
 		492292317C9AA84D410C67C2 /* Pods-ios-base.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base.release.xcconfig"; path = "Target Support Files/Pods-ios-base/Pods-ios-base.release.xcconfig"; sourceTree = "<group>"; };
@@ -369,7 +371,7 @@
 		2387833824CDDF80005D6197 /* DarkMode */ = {
 			isa = PBXGroup;
 			children = (
-				2387833924CDDF8D005D6197 /* HandleDarkMode.swift */,
+				2387833E24CDE514005D6197 /* HandleDarkMode.swift */,
 			);
 			path = DarkMode;
 			sourceTree = "<group>";
@@ -964,7 +966,6 @@
 				236A0B5124CD85F5001E8002 /* KeychainItem.swift in Sources */,
 				9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */,
 				236A0B5324CD8655001E8002 /* KeyChainUniqueId.swift in Sources */,
-				2387833A24CDDF8D005D6197 /* HandleDarkMode.swift in Sources */,
 				FE06840322CE7ED400C6294F /* R.generated.swift in Sources */,
 				FE4D635C22B2C75400685161 /* Navigator.swift in Sources */,
 				FE251D0722A7FE0F00E0DE90 /* DataExtension.swift in Sources */,
@@ -973,6 +974,7 @@
 				074889A72477251500A0029E /* ActivityIndicatorPresenter.swift in Sources */,
 				E8FBB1C11DD21D18000D6740 /* SessionManager.swift in Sources */,
 				2387833D24CDE3E1005D6197 /* BaseViewController.swift in Sources */,
+				2387833F24CDE514005D6197 /* HandleDarkMode.swift in Sources */,
 				236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */,
 				9BE3669F1F10175E007CAECD /* Base64Media.swift in Sources */,
 				9BAFB7C32114E3CD0099DC61 /* SignInViewModel.swift in Sources */,
