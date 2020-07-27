@@ -22,6 +22,9 @@ target 'ios-base' do
   pod 'FBSDKLoginKit', '~> 5.5.0'
   # ------
   
+  pod 'SwiftKeychainWrapper', '~> 3.4.0'
+  pod 'SwiftyBeaver', '~> 1.9.1'
+  
   target 'ios-baseUITests' do
     inherit! :complete
     pod 'Swifter', '~> 1.4.7'

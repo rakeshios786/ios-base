@@ -26,7 +26,8 @@
 		074D20DD248ECEAC002A39B4 /* BaseURLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D20DC248ECEAC002A39B4 /* BaseURLConvertible.swift */; };
 		07741D72218CDED600DB3B97 /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07741D71218CDED600DB3B97 /* FirstViewModel.swift */; };
 		0ABFB8901FA366D90098F751 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABFB8921FA366D90098F751 /* Main.storyboard */; };
-		236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5224CD8655001E8002 /* KeychainWrapper.swift */; };
+		233B4D0224CF1E5400BB201A /* UserDefaultsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233B4D0124CF1E5400BB201A /* UserDefaultsUtils.swift */; };
+		233B4D0524CF1EA500BB201A /* RKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233B4D0424CF1EA500BB201A /* RKLogger.swift */; };
 		236A0B5A24CD8A4A001E8002 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */; };
 		236A0B5B24CD8A4B001E8002 /* NotificationCenterHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */; };
 		236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */; };
@@ -119,7 +120,8 @@
 		0ABFB8961FA366EC0098F751 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		0E4800422B5D4DDA2D437100 /* Pods-ios-base-ios-baseUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-base-ios-baseUITests.release.xcconfig"; path = "Target Support Files/Pods-ios-base-ios-baseUITests/Pods-ios-base-ios-baseUITests.release.xcconfig"; sourceTree = "<group>"; };
 		18C57D0B131511ACAD07441F /* Pods_AcceptanceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcceptanceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		236A0B5224CD8655001E8002 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		233B4D0124CF1E5400BB201A /* UserDefaultsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtils.swift; sourceTree = "<group>"; };
+		233B4D0424CF1EA500BB201A /* RKLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKLogger.swift; sourceTree = "<group>"; };
 		236A0B5724CD8A4A001E8002 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
 		236A0B5824CD8A4A001E8002 /* NotificationCenterHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterHandle.swift; sourceTree = "<group>"; };
 		236A0B5924CD8A4A001E8002 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
@@ -339,12 +341,20 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		236A0B4924CD84C3001E8002 /* KeychainHelper */ = {
+		233B4D0024CF1E4100BB201A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				236A0B5224CD8655001E8002 /* KeychainWrapper.swift */,
+				233B4D0124CF1E5400BB201A /* UserDefaultsUtils.swift */,
 			);
-			path = KeychainHelper;
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		233B4D0324CF1EA500BB201A /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				233B4D0424CF1EA500BB201A /* RKLogger.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		236A0B5624CD8A4A001E8002 /* NotificationCenter */ = {
@@ -378,6 +388,7 @@
 		9B0C72511C738C3100BAF3B1 /* ios-base */ = {
 			isa = PBXGroup;
 			children = (
+				233B4D0024CF1E4100BB201A /* Utils */,
 				078642F222E6691B0027BF11 /* Common */,
 				078642EB22E668520027BF11 /* Home */,
 				078642EA22E668120027BF11 /* Onboarding */,
@@ -506,8 +517,8 @@
 		9BFA84EF1C7767DD009F64E4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				233B4D0324CF1EA500BB201A /* Logging */,
 				236A0B5624CD8A4A001E8002 /* NotificationCenter */,
-				236A0B4924CD84C3001E8002 /* KeychainHelper */,
 				9B88CC661CAB305900AE60C5 /* Constants.swift */,
 			);
 			path = Helpers;
@@ -734,6 +745,8 @@
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RSFontSizes/RSFontSizes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework",
 			);
@@ -748,6 +761,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSFontSizes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swifter.framework",
 			);
@@ -772,6 +787,8 @@
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/RSFontSizes/RSFontSizes.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -785,6 +802,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RSFontSizes.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -908,6 +927,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233B4D0524CF1EA500BB201A /* RKLogger.swift in Sources */,
 				E8290BFE1D832D9200599960 /* ViewExtension.swift in Sources */,
 				07741D72218CDED600DB3B97 /* FirstViewModel.swift in Sources */,
 				FE583F0C22AFC9EA00EF3CDA /* AnalyticsService.swift in Sources */,
@@ -938,7 +958,6 @@
 				9B3AA39B1ED35013005A4D26 /* SignUpViewController.swift in Sources */,
 				9B5EAB4A232C146D00B9CE3C /* TextFieldExtension.swift in Sources */,
 				9B0C72711C738D3400BAF3B1 /* AppDelegate.swift in Sources */,
-				236A0B5324CD8655001E8002 /* KeychainWrapper.swift in Sources */,
 				FE06840322CE7ED400C6294F /* R.generated.swift in Sources */,
 				FE4D635C22B2C75400685161 /* Navigator.swift in Sources */,
 				FE251D0722A7FE0F00E0DE90 /* DataExtension.swift in Sources */,
@@ -950,6 +969,7 @@
 				236A0B5C24CD8A4B001E8002 /* WeakObjectSet.swift in Sources */,
 				9BE3669F1F10175E007CAECD /* Base64Media.swift in Sources */,
 				9BAFB7C32114E3CD0099DC61 /* SignInViewModel.swift in Sources */,
+				233B4D0224CF1E5400BB201A /* UserDefaultsUtils.swift in Sources */,
 				9B8EB5BD2475890A0082370F /* NetworkState.swift in Sources */,
 				9B88CC671CAB305900AE60C5 /* Constants.swift in Sources */,
 				9BAFB7BF2114D9910099DC61 /* HomeViewModel.swift in Sources */,
