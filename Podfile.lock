@@ -72,6 +72,8 @@ PODS:
   - RSFontSizes (1.0.2):
     - Device (~> 3.1.2)
   - Swifter (1.4.7)
+  - SwiftKeychainWrapper (3.4.0)
+  - SwiftyBeaver (1.9.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2.0)
@@ -85,6 +87,8 @@ DEPENDENCIES:
   - R.swift (~> 5.0.3)
   - RSFontSizes (~> 1.0.2)
   - Swifter (~> 1.4.7)
+  - SwiftKeychainWrapper
+  - SwiftyBeaver (~> 1.9.1)
 
 SPEC REPOS:
   trunk:
@@ -108,6 +112,8 @@ SPEC REPOS:
     - R.swift.Library
     - RSFontSizes
     - Swifter
+    - SwiftKeychainWrapper
+    - SwiftyBeaver
 
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
@@ -130,7 +136,13 @@ SPEC CHECKSUMS:
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
   RSFontSizes: cf14ae41c2807b66573f7064528ccff8c98251c9
   Swifter: 2327ef5d872c638aebab79646ce494af508b0c8f
+  SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
+  SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
 
+<<<<<<< HEAD
 PODFILE CHECKSUM: 3c6f3c70bb224ba8d3a4dee77cbdd81bfe501c5a
+=======
+PODFILE CHECKSUM: 76dd581f555b1972ea22819edcc787a3fd67b33d
+>>>>>>> f2405b3b207fcc926f5dca8da50df17afa80cf74
 
 COCOAPODS: 1.9.2

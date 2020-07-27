@@ -22,10 +22,15 @@ target 'ios-base' do
   pod 'FBSDKLoginKit', '~> 5.5.0'
   # ------
   
+<<<<<<< HEAD
   # DarkMode --
   pod 'FluentDarkModeKit'
   # -------
   
+=======
+  pod 'SwiftKeychainWrapper', '~> 3.4.0'
+  pod 'SwiftyBeaver', '~> 1.9.1'
+>>>>>>> f2405b3b207fcc926f5dca8da50df17afa80cf74
   
   target 'ios-baseUITests' do
     inherit! :complete
