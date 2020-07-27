@@ -1,6 +1,8 @@
 disabled_rules: # rule identifiers to exclude from running
   - todo
   - trailing_whitespace
+  - identifier_name
+  - line_length
   - type_name # deactivated because swift3 need lowercase enums
 opt_in_rules: # some rules are only opt-in
   - array_init

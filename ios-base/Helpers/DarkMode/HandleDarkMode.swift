@@ -20,10 +20,10 @@ class HandleDarkMode: NSObject {
     
     func setup() {
         DarkModeManager.setup()
-        if let value = DYFSwiftKeychain.shared.getBool("darkMode") {
-            DMTraitCollection.current = value ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
+        if let value = DYFSwiftKeychain.shared.get("darkMode") {
+            DMTraitCollection.current = (value == "1") ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
         } else {
-            DYFSwiftKeychain.shared.set(false, forKey: "darkMode")
+            DYFSwiftKeychain.shared.set("0", forKey: "darkMode")
             
             DMTraitCollection.current = DMTraitCollection(userInterfaceStyle: .light)
         }
@@ -32,10 +32,16 @@ class HandleDarkMode: NSObject {
     }
     
     func tongle() {
-        if let value = DYFSwiftKeychain.shared.getBool("darkMode") {
-            
-            DYFSwiftKeychain.shared.set(!value, forKey: "darkMode")
-            DMTraitCollection.current = !value  ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
+        
+        if let value = DYFSwiftKeychain.shared.get("darkMode") {
+            var currentValue = ""
+            if value == "1" {
+                currentValue = "0"
+            } else {
+                currentValue = "1"
+            }
+            DYFSwiftKeychain.shared.set(currentValue, forKey: "darkMode")
+            DMTraitCollection.current = (currentValue == "1") ? DMTraitCollection(userInterfaceStyle: .dark) : DMTraitCollection(userInterfaceStyle: .light)
         } else {
             DMTraitCollection.current = DMTraitCollection(userInterfaceStyle: .light)
         }
